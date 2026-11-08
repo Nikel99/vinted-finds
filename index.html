@@ -14,7 +14,7 @@
     --accent: var(--tg-theme-button-color, #2a7de1);
     --accent-text: var(--tg-theme-button-text-color, #ffffff);
     --card: var(--tg-theme-section-bg-color, var(--tg-theme-bg-color, #ffffff));
-    --rare: #b26cf0; --deal: #22a861; --fake: #e5533d; --strange: #e8a33a;
+    --rare: #b26cf0; --deal: #22a861; --fake: #e5533d; --strange: #e8a33a; --seen: #22a861;
   }
   @media (prefers-color-scheme: dark) {
     :root:not(.tg) { --bg:#0f0f12; --bg2:#1a1a1f; --text:#f2f2f5; --hint:#8e8e96; --card:#1d1d23; }
@@ -23,19 +23,26 @@
   html, body { margin: 0; background: var(--bg2); color: var(--text);
     font: 15px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
   header { position: sticky; top: 0; z-index: 5; background: var(--bg2); padding: 12px 16px 8px; }
+  .hrow { display: flex; align-items: center; gap: 8px; }
   h1 { font-size: 22px; margin: 0 0 2px; letter-spacing: -.3px; }
+  .clean { margin-left: auto; border: 0; background: var(--card); color: var(--text); font: inherit; font-size: 13px;
+    border-radius: 999px; padding: 6px 12px; cursor: pointer; }
   .sub { color: var(--hint); font-size: 13px; }
   .chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
   .chips::-webkit-scrollbar { display: none; }
   .chip { flex: none; border: 0; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 13px;
     background: var(--card); color: var(--text); cursor: pointer; }
   .chip.on { background: var(--accent); color: var(--accent-text); }
-  main { padding: 4px 12px 32px; display: grid; gap: 10px; }
+  main { padding: 4px 12px 40px; display: grid; gap: 10px; }
   .day { color: var(--hint); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin: 10px 4px 0; }
-  .card { display: flex; gap: 12px; background: var(--card); border-radius: 14px; padding: 10px; cursor: pointer; }
+  .card { position: relative; display: flex; gap: 12px; background: var(--card); border-radius: 14px; padding: 10px;
+    cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; transition: transform .12s, opacity .2s; }
+  .card.press { transform: scale(.97); }
+  .card.mine { opacity: .62; }
   .ph { flex: none; width: 96px; height: 128px; border-radius: 10px; background: var(--bg2) center/cover no-repeat;
-    display: grid; place-items: center; color: var(--hint); font-size: 28px; }
-  .body { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    display: grid; place-items: center; color: var(--hint); font-size: 28px; overflow: hidden; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .body { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; padding-bottom: 18px; }
   .top { display: flex; align-items: baseline; gap: 8px; }
   .price { font-size: 19px; font-weight: 700; }
   .time { margin-left: auto; color: var(--hint); font-size: 12px; white-space: nowrap; }
@@ -47,23 +54,38 @@
   .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 6px; color: #fff; vertical-align: 2px; }
   .tag.rare { background: var(--rare); } .tag.deal { background: var(--deal); }
   .tag.fake { background: var(--fake); } .tag.strange { background: var(--strange); }
+  .seen { position: absolute; right: 10px; bottom: 8px; display: flex; gap: 4px; }
+  .seen span { font-size: 11px; font-weight: 600; color: var(--seen); background: color-mix(in srgb, var(--seen) 14%, transparent);
+    border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
   .empty { text-align: center; color: var(--hint); padding: 48px 16px; }
+  .hint { text-align: center; color: var(--hint); font-size: 12px; padding: 4px 16px 0; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: rgba(0,0,0,.82); color: #fff;
+    padding: 8px 14px; border-radius: 10px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 20; }
+  .toast.on { opacity: 1; }
 </style>
 </head>
 <body>
 <header>
-  <h1>Находки Vinted</h1>
+  <div class="hrow"><h1>Находки Vinted</h1><button class="clean" id="clean">🧹 Очистить</button></div>
   <div class="sub" id="sub">Загрузка…</div>
   <div class="chips" id="chips"></div>
 </header>
+<div class="hint">Зажми карточку — отметить прочитанным или удалить</div>
 <main id="list"></main>
+<div class="toast" id="toast"></div>
 <script>
+// Shared-state server (Cloudflare Worker). Empty = marks/deletion disabled.
+const API = "";
+
 const tg = window.Telegram && Telegram.WebApp;
-if (tg && tg.initData !== undefined) { document.documentElement.classList.add("tg"); tg.ready(); tg.expand(); }
+const inTg = !!(tg && tg.initData);
+if (inTg) { document.documentElement.classList.add("tg"); tg.ready(); tg.expand(); }
+const me = inTg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
 const TAGS = { rare: "редкое", deal: "выгодно", fake: "риск фейка", strange: "странное" };
-let all = [], brand = "Все";
+let all = [], filter = "Все", state = { marks: {}, hidden: {} };
 
+const esc = s => String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 function ago(ts) {
   const m = Math.round((Date.now() - new Date(ts)) / 60000);
   if (m < 1) return "только что"; if (m < 60) return m + " мин";
@@ -71,25 +93,31 @@ function ago(ts) {
   return new Date(ts).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 }
 function dayLabel(ts) {
-  const d = new Date(ts), t = new Date(); const y = new Date(); y.setDate(t.getDate() - 1);
+  const d = new Date(ts), t = new Date(), y = new Date(); y.setDate(t.getDate() - 1);
   if (d.toDateString() === t.toDateString()) return "Сегодня";
   if (d.toDateString() === y.toDateString()) return "Вчера";
   return d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
 }
-const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1800); }
+function haptic(k) { try { tg.HapticFeedback.impactOccurred(k || "medium"); } catch {} }
 
-function open(url) { if (tg && tg.openLink) tg.openLink(url); else window.open(url, "_blank"); }
+const visible = () => all.filter(x => !state.hidden[x.id]);
+const marks = x => state.marks[x.id] || [];
+const seenByMe = x => me && marks(x).some(m => m.u === me);
 
 function render() {
-  const items = all.filter(x => brand === "Все" || x.brand === brand);
+  let items = visible();
+  if (filter === "Новые") items = items.filter(x => !seenByMe(x));
+  else if (filter !== "Все") items = items.filter(x => x.brand === filter);
   const list = document.getElementById("list");
   if (!items.length) { list.innerHTML = '<div class="empty">Пока ничего нет</div>'; return; }
   let html = "", lastDay = "";
   for (const x of items) {
     const day = dayLabel(x.ts);
     if (day !== lastDay) { html += `<div class="day">${day}</div>`; lastDay = day; }
-    html += `<div class="card" data-url="${esc(x.url)}">
-      <div class="ph" ${x.img ? `style="background-image:url('${esc(x.img)}')"` : ""}>${x.img ? "" : "🧥"}</div>
+    const ms = marks(x);
+    html += `<div class="card ${seenByMe(x) ? "mine" : ""}" data-id="${x.id}">
+      <div class="ph">${x.img ? `<img src="${esc(x.img)}" loading="lazy" alt="" onerror="this.remove();this.parentNode.textContent='🧥'">` : "🧥"}</div>
       <div class="body">
         <div class="top"><span class="price">${Math.round(x.price)} €</span>
           ${x.tag && TAGS[x.tag] ? `<span class="tag ${x.tag}">${TAGS[x.tag]}</span>` : ""}
@@ -98,31 +126,105 @@ function render() {
         <div class="meta">${esc([x.size, x.cond].filter(Boolean).join(" · "))}</div>
         ${x.why ? `<div class="why">${esc(x.why)}</div>` : ""}
         ${x.risk ? `<div class="risk"><b>Риск:</b> ${esc(x.risk)}</div>` : ""}
-      </div></div>`;
+      </div>
+      ${ms.length ? `<div class="seen">${ms.map(m => `<span>✓ ${esc(m.n)}</span>`).join("")}</div>` : ""}
+    </div>`;
   }
   list.innerHTML = html;
 }
 
 function renderChips() {
-  const counts = {};
-  for (const x of all) counts[x.brand || "Другое"] = (counts[x.brand || "Другое"] || 0) + 1;
-  const names = ["Все", ...Object.keys(counts).sort((a, b) => counts[b] - counts[a])];
-  document.getElementById("chips").innerHTML = names.map(n =>
-    `<button class="chip ${n === brand ? "on" : ""}" data-b="${esc(n)}">${esc(n)} ${n === "Все" ? all.length : counts[n]}</button>`).join("");
+  const v = visible(), counts = {};
+  for (const x of v) counts[x.brand || "Другое"] = (counts[x.brand || "Другое"] || 0) + 1;
+  const unseen = v.filter(x => !seenByMe(x)).length;
+  const names = ["Все", ...(me ? ["Новые"] : []), ...Object.keys(counts).sort((a, b) => counts[b] - counts[a])];
+  const n = k => k === "Все" ? v.length : k === "Новые" ? unseen : counts[k];
+  document.getElementById("chips").innerHTML = names.map(k =>
+    `<button class="chip ${k === filter ? "on" : ""}" data-f="${esc(k)}">${k === "Новые" ? "Непрочитанные" : esc(k)} ${n(k)}</button>`).join("");
+  document.getElementById("sub").textContent = `${v.length} находок · последняя ${all[0] ? ago(all[0].ts) : "—"}`;
 }
+const refresh = () => { renderChips(); render(); };
+
+async function post(path, body) {
+  if (!API) { toast("Отметки ещё не подключены"); return false; }
+  if (!inTg) { toast("Открой приложение из Telegram-бота"); return false; }
+  try {
+    const r = await fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ initData: tg.initData, ...body }) });
+    if (!r.ok) throw new Error(r.status);
+    state = await r.json(); refresh(); return true;
+  } catch (e) { toast("Не удалось сохранить, попробуй ещё раз"); return false; }
+}
+
+function popup(params) {
+  return new Promise(res => {
+    if (tg && tg.showPopup && inTg) tg.showPopup(params, res);
+    else { const b = params.buttons.filter(b => b.type !== "cancel"); const i = prompt(params.message + "\n" + b.map((x, i) => `${i + 1}. ${x.text}`).join("\n")); res(b[+i - 1] ? b[+i - 1].id : null); }
+  });
+}
+
+async function actions(id) {
+  const x = all.find(d => String(d.id) === String(id)); if (!x) return;
+  haptic("medium");
+  const mine = seenByMe(x);
+  const choice = await popup({ title: `${Math.round(x.price)} € · ${x.brand || ""}`.slice(0, 64), message: x.title.slice(0, 200),
+    buttons: [{ id: "seen", type: "default", text: mine ? "Снять отметку" : "✓ Прочитано" },
+              { id: "hide", type: "destructive", text: "Удалить" }, { type: "cancel" }] });
+  if (choice === "seen") { if (await post("/mark", { id: x.id, on: !mine })) toast(mine ? "Отметка снята" : "Отмечено ✓"); }
+  else if (choice === "hide") { if (await post("/hide", { ids: [x.id] })) toast("Удалено"); }
+}
+
+async function clean() {
+  const v = visible(), dayMs = 86400000;
+  const choice = await popup({ title: "Очистить ленту", message: "Какие находки удалить? Удаление общее — пропадут и у друга.",
+    buttons: [{ id: "1", text: "Старше 1 дня" }, { id: "3", text: "Старше 3 дней" }, { type: "cancel" }] });
+  if (!choice) return;
+  const ids = v.filter(x => Date.now() - new Date(x.ts) > +choice * dayMs).map(x => x.id);
+  if (!ids.length) { toast("Нечего удалять"); return; }
+  if (await post("/hide", { ids })) toast(`Удалено: ${ids.length}`);
+}
+
+// long-press handling (touch + mouse)
+let timer = null, longFired = false, startXY = null;
+function down(e) {
+  const card = e.target.closest(".card"); if (!card) return;
+  longFired = false; const p = e.touches ? e.touches[0] : e; startXY = [p.clientX, p.clientY];
+  card.classList.add("press");
+  timer = setTimeout(() => { longFired = true; card.classList.remove("press"); actions(card.dataset.id); }, 480);
+}
+function cancel() { clearTimeout(timer); document.querySelectorAll(".card.press").forEach(c => c.classList.remove("press")); }
+function move(e) { if (!startXY) return; const p = e.touches ? e.touches[0] : e;
+  if (Math.abs(p.clientX - startXY[0]) + Math.abs(p.clientY - startXY[1]) > 10) cancel(); }
+document.addEventListener("touchstart", down, { passive: true });
+document.addEventListener("touchmove", move, { passive: true });
+document.addEventListener("touchend", cancel);
+document.addEventListener("mousedown", down);
+document.addEventListener("mousemove", move);
+document.addEventListener("mouseup", cancel);
+document.addEventListener("contextmenu", e => { if (e.target.closest(".card")) e.preventDefault(); });
 
 document.addEventListener("click", e => {
   const chip = e.target.closest(".chip");
-  if (chip) { brand = chip.dataset.b; renderChips(); render(); window.scrollTo(0, 0); return; }
+  if (chip) { filter = chip.dataset.f; refresh(); window.scrollTo(0, 0); return; }
+  if (e.target.closest("#clean")) { clean(); return; }
   const card = e.target.closest(".card");
-  if (card && card.dataset.url) open(card.dataset.url);
+  if (card) {
+    if (longFired) { longFired = false; return; }
+    const x = all.find(d => String(d.id) === card.dataset.id);
+    if (x) { if (tg && tg.openLink && inTg) tg.openLink(x.url); else window.open(x.url, "_blank"); }
+  }
 });
 
+async function loadState() {
+  if (!API) return;
+  try { const r = await fetch(API + "/state?t=" + Date.now()); if (r.ok) { state = await r.json(); refresh(); } } catch {}
+}
+
 fetch("deals.json?t=" + Date.now()).then(r => r.json()).then(d => {
-  all = d.sort((a, b) => (b.ts > a.ts ? 1 : -1));
-  document.getElementById("sub").textContent = `${all.length} находок · обновлено ${all[0] ? ago(all[0].ts) : "—"}`;
-  renderChips(); render();
+  all = d.sort((a, b) => (b.ts > a.ts ? 1 : -1)); refresh(); loadState();
 }).catch(() => { document.getElementById("sub").textContent = "Не удалось загрузить находки"; });
+document.addEventListener("visibilitychange", () => { if (!document.hidden) loadState(); });
+setInterval(loadState, 30000);
 </script>
 </body>
 </html>
