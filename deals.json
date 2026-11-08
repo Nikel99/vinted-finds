@@ -1,5 +1,47 @@
 [
  {
+  "id": 10720223642,
+  "brand": "Stone Island",
+  "title": "Пуховик Stone Island (Doudoune)",
+  "price": 65,
+  "size": "M",
+  "cond": "Très bon état",
+  "why": "Пуховик SI за 65 € при медиане курток ~210 €",
+  "risk": "Описание пустое, модель не указана — проверить оригинальность",
+  "tag": "deal",
+  "ts": "2026-11-08T16:42:00",
+  "url": "https://www.vinted.fr/items/10720223642",
+  "img": "img/10720223642.jpg"
+ },
+ {
+  "id": 10720442631,
+  "brand": "C.P. Company",
+  "title": "Чёрное пальто/куртка C.P. Company",
+  "price": 70,
+  "size": "M",
+  "cond": "Très bon état",
+  "why": "Ниже дешёвой границы рынка (115–140 €), медиана ~190 €",
+  "risk": "Модель не указана",
+  "tag": "deal",
+  "ts": "2026-11-08T16:42:00",
+  "url": "https://www.vinted.fr/items/10720442631",
+  "img": "img/10720442631.jpg"
+ },
+ {
+  "id": 10720415761,
+  "brand": "Prada",
+  "title": "Prada Re-Nylon худи",
+  "price": 75,
+  "size": "S",
+  "cond": "Très bon état",
+  "why": "Re-Nylon за 75 € — странное, но выгодное, разобраться",
+  "risk": "Высокий риск подделки — проверить бирки и треугольник",
+  "tag": "strange",
+  "ts": "2026-11-08T16:42:00",
+  "url": "https://www.vinted.fr/items/10720415761",
+  "img": "img/10720415761.jpg"
+ },
+ {
   "id": 10719812928,
   "brand": "Stone Island",
   "title": "Stone Island Soft Shell-R серая",
