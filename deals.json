@@ -1,5 +1,37 @@
 [
  {
+  "id": 10722006104,
+  "ts": "2026-11-08T17:45:02",
+  "brand": "Stone Island",
+  "title": "Софтшелл Stone Island неон лайм с капюшоном",
+  "price": 92,
+  "size": "M",
+  "cond": "Très bon état",
+  "why": "Софтшелл SI дешевле 100 € (куртки обычно ~210 €), яркий цвет",
+  "risk": "Проверить оригинальность — кнопки бейджа и Certilogo на фото не видны",
+  "url": "https://www.vinted.fr/items/10722006104",
+  "img": "img/10722006104.jpg",
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
+ },
+ {
+  "id": 10722131057,
+  "ts": "2026-11-08T17:45:02",
+  "brand": "Stone Island",
+  "title": "Зип-худи Stone Island тёмно-синее",
+  "price": 50,
+  "size": "M",
+  "cond": "Très bon état",
+  "why": "Зип-худи SI за 50 € при медиане ~125 €",
+  "risk": "",
+  "url": "https://www.vinted.fr/items/10722131057",
+  "img": "img/10722131057.jpg",
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
+ },
+ {
   "id": 10721495084,
   "brand": "C.P. Company",
   "title": "Пуховик C.P. Company × Palace с гоггл-капюшоном",
