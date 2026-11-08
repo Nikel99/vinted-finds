@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vinted находки</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #ffffff);
+    --bg2: var(--tg-theme-secondary-bg-color, #f2f2f5);
+    --text: var(--tg-theme-text-color, #111111);
+    --hint: var(--tg-theme-hint-color, #8a8a8e);
+    --accent: var(--tg-theme-button-color, #2a7de1);
+    --accent-text: var(--tg-theme-button-text-color, #ffffff);
+    --card: var(--tg-theme-section-bg-color, var(--tg-theme-bg-color, #ffffff));
+    --rare: #b26cf0; --deal: #22a861; --fake: #e5533d; --strange: #e8a33a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not(.tg) { --bg:#0f0f12; --bg2:#1a1a1f; --text:#f2f2f5; --hint:#8e8e96; --card:#1d1d23; }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg2); color: var(--text);
+    font: 15px/1.35 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg2); padding: 12px 16px 8px; }
+  h1 { font-size: 22px; margin: 0 0 2px; letter-spacing: -.3px; }
+  .sub { color: var(--hint); font-size: 13px; }
+  .chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; border: 0; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 13px;
+    background: var(--card); color: var(--text); cursor: pointer; }
+  .chip.on { background: var(--accent); color: var(--accent-text); }
+  main { padding: 4px 12px 32px; display: grid; gap: 10px; }
+  .day { color: var(--hint); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin: 10px 4px 0; }
+  .card { display: flex; gap: 12px; background: var(--card); border-radius: 14px; padding: 10px; cursor: pointer; }
+  .ph { flex: none; width: 96px; height: 128px; border-radius: 10px; background: var(--bg2) center/cover no-repeat;
+    display: grid; place-items: center; color: var(--hint); font-size: 28px; }
+  .body { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .top { display: flex; align-items: baseline; gap: 8px; }
+  .price { font-size: 19px; font-weight: 700; }
+  .time { margin-left: auto; color: var(--hint); font-size: 12px; white-space: nowrap; }
+  .title { font-weight: 600; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .meta { color: var(--hint); font-size: 13px; }
+  .why { font-size: 13px; }
+  .risk { font-size: 12px; color: var(--hint); }
+  .risk b { color: var(--fake); font-weight: 600; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 6px; color: #fff; vertical-align: 2px; }
+  .tag.rare { background: var(--rare); } .tag.deal { background: var(--deal); }
+  .tag.fake { background: var(--fake); } .tag.strange { background: var(--strange); }
+  .empty { text-align: center; color: var(--hint); padding: 48px 16px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Находки Vinted</h1>
+  <div class="sub" id="sub">Загрузка…</div>
+  <div class="chips" id="chips"></div>
+</header>
+<main id="list"></main>
+<script>
+const tg = window.Telegram && Telegram.WebApp;
+if (tg && tg.initData !== undefined) { document.documentElement.classList.add("tg"); tg.ready(); tg.expand(); }
+
+const TAGS = { rare: "редкое", deal: "выгодно", fake: "риск фейка", strange: "странное" };
+let all = [], brand = "Все";
+
+function ago(ts) {
+  const m = Math.round((Date.now() - new Date(ts)) / 60000);
+  if (m < 1) return "только что"; if (m < 60) return m + " мин";
+  const h = Math.round(m / 60); if (h < 24) return h + " ч";
+  return new Date(ts).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
+}
+function dayLabel(ts) {
+  const d = new Date(ts), t = new Date(); const y = new Date(); y.setDate(t.getDate() - 1);
+  if (d.toDateString() === t.toDateString()) return "Сегодня";
+  if (d.toDateString() === y.toDateString()) return "Вчера";
+  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
+}
+const esc = s => String(s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function open(url) { if (tg && tg.openLink) tg.openLink(url); else window.open(url, "_blank"); }
+
+function render() {
+  const items = all.filter(x => brand === "Все" || x.brand === brand);
+  const list = document.getElementById("list");
+  if (!items.length) { list.innerHTML = '<div class="empty">Пока ничего нет</div>'; return; }
+  let html = "", lastDay = "";
+  for (const x of items) {
+    const day = dayLabel(x.ts);
+    if (day !== lastDay) { html += `<div class="day">${day}</div>`; lastDay = day; }
+    html += `<div class="card" data-url="${esc(x.url)}">
+      <div class="ph" ${x.img ? `style="background-image:url('${esc(x.img)}')"` : ""}>${x.img ? "" : "🧥"}</div>
+      <div class="body">
+        <div class="top"><span class="price">${Math.round(x.price)} €</span>
+          ${x.tag && TAGS[x.tag] ? `<span class="tag ${x.tag}">${TAGS[x.tag]}</span>` : ""}
+          <span class="time">${ago(x.ts)}</span></div>
+        <div class="title">${esc(x.title)}</div>
+        <div class="meta">${esc([x.size, x.cond].filter(Boolean).join(" · "))}</div>
+        ${x.why ? `<div class="why">${esc(x.why)}</div>` : ""}
+        ${x.risk ? `<div class="risk"><b>Риск:</b> ${esc(x.risk)}</div>` : ""}
+      </div></div>`;
+  }
+  list.innerHTML = html;
+}
+
+function renderChips() {
+  const counts = {};
+  for (const x of all) counts[x.brand || "Другое"] = (counts[x.brand || "Другое"] || 0) + 1;
+  const names = ["Все", ...Object.keys(counts).sort((a, b) => counts[b] - counts[a])];
+  document.getElementById("chips").innerHTML = names.map(n =>
+    `<button class="chip ${n === brand ? "on" : ""}" data-b="${esc(n)}">${esc(n)} ${n === "Все" ? all.length : counts[n]}</button>`).join("");
+}
+
+document.addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if (chip) { brand = chip.dataset.b; renderChips(); render(); window.scrollTo(0, 0); return; }
+  const card = e.target.closest(".card");
+  if (card && card.dataset.url) open(card.dataset.url);
+});
+
+fetch("deals.json?t=" + Date.now()).then(r => r.json()).then(d => {
+  all = d.sort((a, b) => (b.ts > a.ts ? 1 : -1));
+  document.getElementById("sub").textContent = `${all.length} находок · обновлено ${all[0] ? ago(all[0].ts) : "—"}`;
+  renderChips(); render();
+}).catch(() => { document.getElementById("sub").textContent = "Не удалось загрузить находки"; });
+</script>
+</body>
+</html>
