@@ -28,6 +28,13 @@
   .clean { margin-left: auto; border: 0; background: var(--card); color: var(--text); font: inherit; font-size: 13px;
     border-radius: 999px; padding: 6px 12px; cursor: pointer; }
   .sub { color: var(--hint); font-size: 13px; }
+  .tiers { display: flex; background: var(--card); border-radius: 10px; padding: 3px; margin-top: 10px; }
+  .tiers button { flex: 1; border: 0; background: none; color: var(--text); font: inherit; font-size: 13px; font-weight: 600;
+    padding: 7px 4px; border-radius: 8px; cursor: pointer; }
+  .tiers button.on { background: var(--accent); color: var(--accent-text); }
+  .tiers small { font-weight: 400; opacity: .7; }
+  .rarity { font-size: 12px; color: var(--rare); }
+  .tierb { font-size: 10px; font-weight: 700; letter-spacing: .4px; color: var(--hint); }
   .chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
   .chips::-webkit-scrollbar { display: none; }
   .chip { flex: none; border: 0; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 13px;
@@ -68,6 +75,7 @@
 <header>
   <div class="hrow"><h1>Находки Vinted</h1><button class="clean" id="clean">🧹 Очистить</button></div>
   <div class="sub" id="sub">Загрузка…</div>
+  <div class="tiers" id="tiers"></div>
   <div class="chips" id="chips"></div>
 </header>
 <div class="hint">Зажми карточку — отметить прочитанным или удалить</div>
@@ -83,7 +91,7 @@ if (inTg) { document.documentElement.classList.add("tg"); tg.ready(); tg.expand(
 const me = inTg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
 const TAGS = { rare: "редкое", deal: "выгодно", fake: "риск фейка", strange: "странное" };
-let all = [], filter = "Все", state = { marks: {}, hidden: {} };
+let all = [], filter = "Все", tier = "all", state = { marks: {}, hidden: {} };
 
 const esc = s => String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 function ago(ts) {
@@ -101,7 +109,16 @@ function dayLabel(ts) {
 function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1800); }
 function haptic(k) { try { tg.HapticFeedback.impactOccurred(k || "medium"); } catch {} }
 
-const visible = () => all.filter(x => !state.hidden[x.id]);
+const TIERS = [["all", "Все"], ["low", "🟢 Low"], ["middle", "🔵 Middle"], ["luxury", "💎 Luxury"]];
+function tierOf(x) {
+  if (x.tier) return x.tier;
+  if (x.brand === "Prada") return "luxury";
+  if (x.price > 200) return "luxury";
+  if (x.price > 100 && /Stone|C\.P/.test(x.brand)) return "middle";
+  return "low";
+}
+const visibleAll = () => all.filter(x => !state.hidden[x.id]);
+const visible = () => visibleAll().filter(x => tier === "all" || tierOf(x) === tier);
 const marks = x => state.marks[x.id] || [];
 const seenByMe = x => me && marks(x).some(m => m.u === me);
 
@@ -121,10 +138,11 @@ function render() {
       <div class="body">
         <div class="top"><span class="price">${Math.round(x.price)} €</span>
           ${x.tag && TAGS[x.tag] ? `<span class="tag ${x.tag}">${TAGS[x.tag]}</span>` : ""}
-          <span class="time">${ago(x.ts)}</span></div>
+          <span class="time">${tier === "all" ? `<span class="tierb">${tierOf(x).toUpperCase()}</span> · ` : ""}${ago(x.ts)}</span></div>
         <div class="title">${esc(x.title)}</div>
         <div class="meta">${esc([x.size, x.cond].filter(Boolean).join(" · "))}</div>
         ${x.why ? `<div class="why">${esc(x.why)}</div>` : ""}
+        ${x.rarity ? `<div class="rarity">◆ ${esc(x.rarity)}</div>` : ""}
         ${x.risk ? `<div class="risk"><b>Риск:</b> ${esc(x.risk)}</div>` : ""}
       </div>
       ${ms.length ? `<div class="seen">${ms.map(m => `<span>✓ ${esc(m.n)}</span>`).join("")}</div>` : ""}
@@ -134,6 +152,10 @@ function render() {
 }
 
 function renderChips() {
+  const va = visibleAll(), tc = { all: va.length };
+  for (const x of va) tc[tierOf(x)] = (tc[tierOf(x)] || 0) + 1;
+  document.getElementById("tiers").innerHTML = TIERS.map(([k, n]) =>
+    `<button class="${k === tier ? "on" : ""}" data-t="${k}">${n} <small>${tc[k] || 0}</small></button>`).join("");
   const v = visible(), counts = {};
   for (const x of v) counts[x.brand || "Другое"] = (counts[x.brand || "Другое"] || 0) + 1;
   const unseen = v.filter(x => !seenByMe(x)).length;
@@ -141,7 +163,7 @@ function renderChips() {
   const n = k => k === "Все" ? v.length : k === "Новые" ? unseen : counts[k];
   document.getElementById("chips").innerHTML = names.map(k =>
     `<button class="chip ${k === filter ? "on" : ""}" data-f="${esc(k)}">${k === "Новые" ? "Непрочитанные" : esc(k)} ${n(k)}</button>`).join("");
-  document.getElementById("sub").textContent = `${v.length} находок · последняя ${all[0] ? ago(all[0].ts) : "—"}`;
+  document.getElementById("sub").textContent = `${va.length} находок · последняя ${all[0] ? ago(all[0].ts) : "—"}`;
 }
 const refresh = () => { renderChips(); render(); };
 
@@ -175,7 +197,7 @@ async function actions(id) {
 }
 
 async function clean() {
-  const v = visible(), dayMs = 86400000;
+  const v = visibleAll(), dayMs = 86400000;
   const choice = await popup({ title: "Очистить ленту", message: "Какие находки удалить? Удаление общее — пропадут и у друга.",
     buttons: [{ id: "1", text: "Старше 1 дня" }, { id: "3", text: "Старше 3 дней" }, { type: "cancel" }] });
   if (!choice) return;
@@ -204,6 +226,8 @@ document.addEventListener("mouseup", cancel);
 document.addEventListener("contextmenu", e => { if (e.target.closest(".card")) e.preventDefault(); });
 
 document.addEventListener("click", e => {
+  const tb = e.target.closest("[data-t]");
+  if (tb) { tier = tb.dataset.t; filter = "Все"; refresh(); window.scrollTo(0, 0); return; }
   const chip = e.target.closest(".chip");
   if (chip) { filter = chip.dataset.f; refresh(); window.scrollTo(0, 0); return; }
   if (e.target.closest("#clean")) { clean(); return; }

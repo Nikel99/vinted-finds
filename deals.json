@@ -11,7 +11,9 @@
   "tag": "deal",
   "ts": "2026-11-08T16:42:00",
   "url": "https://www.vinted.fr/items/10720223642",
-  "img": "img/10720223642.jpg"
+  "img": "img/10720223642.jpg",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10720442631,
@@ -25,7 +27,9 @@
   "tag": "deal",
   "ts": "2026-11-08T16:42:00",
   "url": "https://www.vinted.fr/items/10720442631",
-  "img": "img/10720442631.jpg"
+  "img": "img/10720442631.jpg",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10720415761,
@@ -39,7 +43,9 @@
   "tag": "strange",
   "ts": "2026-11-08T16:42:00",
   "url": "https://www.vinted.fr/items/10720415761",
-  "img": "img/10720415761.jpg"
+  "img": "img/10720415761.jpg",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10719812928,
@@ -53,7 +59,9 @@
   "img": "img/10719812928.jpg",
   "tag": "deal",
   "ts": "2026-11-08T16:13:31",
-  "url": "https://www.vinted.fr/items/10719812928"
+  "url": "https://www.vinted.fr/items/10719812928",
+  "tier": "middle",
+  "rarity": ""
  },
  {
   "id": 10719652198,
@@ -67,7 +75,9 @@
   "img": "img/10719652198.jpg",
   "tag": "deal",
   "ts": "2026-11-08T16:13:31",
-  "url": "https://www.vinted.fr/items/10719652198"
+  "url": "https://www.vinted.fr/items/10719652198",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10719807220,
@@ -81,7 +91,9 @@
   "img": "img/10719807220.jpg",
   "tag": "strange",
   "ts": "2026-11-08T16:13:31",
-  "url": "https://www.vinted.fr/items/10719807220"
+  "url": "https://www.vinted.fr/items/10719807220",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10719637916,
@@ -95,7 +107,9 @@
   "img": "img/10719637916.jpg",
   "tag": "fake",
   "ts": "2026-11-08T16:13:31",
-  "url": "https://www.vinted.fr/items/10719637916"
+  "url": "https://www.vinted.fr/items/10719637916",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10718935672,
@@ -109,7 +123,9 @@
   "img": "img/10718935672.jpg",
   "tag": "deal",
   "ts": "2026-11-08T15:42:25",
-  "url": "https://www.vinted.fr/items/10718935672"
+  "url": "https://www.vinted.fr/items/10718935672",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10719438307,
@@ -123,7 +139,9 @@
   "img": "",
   "tag": "deal",
   "ts": "2026-11-08T15:42:25",
-  "url": "https://www.vinted.fr/items/10719438307"
+  "url": "https://www.vinted.fr/items/10719438307",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10719197279,
@@ -137,7 +155,9 @@
   "img": "img/10719197279.jpg",
   "tag": "deal",
   "ts": "2026-11-08T15:42:25",
-  "url": "https://www.vinted.fr/items/10719197279"
+  "url": "https://www.vinted.fr/items/10719197279",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10719297276,
@@ -151,7 +171,9 @@
   "img": "img/10719297276.jpg",
   "tag": "deal",
   "ts": "2026-11-08T15:42:25",
-  "url": "https://www.vinted.fr/items/10719297276"
+  "url": "https://www.vinted.fr/items/10719297276",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718450376,
@@ -165,7 +187,9 @@
   "risk": "Софтшелл-Goggle часто подделывают — проверить линзы, бирки, CLG",
   "url": "https://www.vinted.fr/items/10718450376",
   "img": "img/10718450376.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718621633,
@@ -179,7 +203,9 @@
   "risk": "Подозрительно дёшево — высокий риск подделки, запросить фото бирок",
   "url": "https://www.vinted.fr/items/10718621633",
   "img": "img/10718621633.jpg",
-  "tag": "strange"
+  "tag": "strange",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10718743578,
@@ -193,7 +219,9 @@
   "risk": "Описание короткое, модель/год не указаны",
   "url": "https://www.vinted.fr/items/10718743578",
   "img": "img/10718743578.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718301424,
@@ -207,7 +235,9 @@
   "risk": "Bon état — проверить износ подошвы и оригинальность",
   "url": "https://www.vinted.fr/items/10718301424",
   "img": "img/10718301424.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10718419063,
@@ -221,7 +251,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718419063",
   "img": "img/10718419063.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718281766,
@@ -235,7 +267,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718281766",
   "img": "img/10718281766.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718286344,
@@ -249,7 +283,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718286344",
   "img": "img/10718286344.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718267356,
@@ -263,7 +299,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718267356",
   "img": "img/10718267356.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718376468,
@@ -277,7 +315,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718376468",
   "img": "img/10718376468.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718722413,
@@ -291,7 +331,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718722413",
   "img": "img/10718722413.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718723506,
@@ -305,7 +347,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718723506",
   "img": "img/10718723506.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718128494,
@@ -319,7 +363,9 @@
   "risk": "Детально не проверял — смотреть патч/бирки",
   "url": "https://www.vinted.fr/items/10718128494",
   "img": "img/10718128494.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718086709,
@@ -333,7 +379,9 @@
   "risk": "Новая с биркой так дёшево — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10718086709",
   "img": "img/10718086709.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10718037383,
@@ -347,7 +395,9 @@
   "risk": "Модель не указана — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10718037383",
   "img": "",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717786110,
@@ -361,7 +411,9 @@
   "risk": "Модель не указана, детально не проверял",
   "url": "https://www.vinted.fr/items/10717786110",
   "img": "img/10717786110.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717837384,
@@ -375,7 +427,9 @@
   "risk": "Детально не проверял",
   "url": "https://www.vinted.fr/items/10717837384",
   "img": "",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717111382,
@@ -389,7 +443,9 @@
   "risk": "Внутренняя бирка срезана — сверить CLG",
   "url": "https://www.vinted.fr/items/10717111382",
   "img": "img/10717111382.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "middle",
+  "rarity": ""
  },
  {
   "id": 10717446366,
@@ -403,7 +459,9 @@
   "risk": "Описания почти нет, 1 фото — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10717446366",
   "img": "img/10717446366.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717193114,
@@ -417,7 +475,9 @@
   "risk": "Проверить патч",
   "url": "https://www.vinted.fr/items/10717193114",
   "img": "img/10717193114.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717423998,
@@ -431,7 +491,9 @@
   "risk": "Описание в одну строку, модель не указана",
   "url": "https://www.vinted.fr/items/10717423998",
   "img": "",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717491504,
@@ -445,7 +507,9 @@
   "risk": "Описания нет — проверить патч",
   "url": "https://www.vinted.fr/items/10717491504",
   "img": "img/10717491504.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717471589,
@@ -459,7 +523,9 @@
   "risk": "Описания нет — проверить патч",
   "url": "https://www.vinted.fr/items/10717471589",
   "img": "img/10717471589.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717073575,
@@ -473,7 +539,9 @@
   "risk": "Не проверялось",
   "url": "https://www.vinted.fr/items/10717073575",
   "img": "img/10717073575.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717397958,
@@ -487,7 +555,9 @@
   "risk": "Не проверялось",
   "url": "https://www.vinted.fr/items/10717397958",
   "img": "img/10717397958.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717383439,
@@ -501,7 +571,9 @@
   "risk": "Не проверялось",
   "url": "https://www.vinted.fr/items/10717383439",
   "img": "",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717350422,
@@ -515,7 +587,9 @@
   "risk": "Не проверялось",
   "url": "https://www.vinted.fr/items/10717350422",
   "img": "img/10717350422.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10717217750,
@@ -529,7 +603,9 @@
   "risk": "Не проверялось",
   "url": "https://www.vinted.fr/items/10717217750",
   "img": "img/10717217750.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716402176,
@@ -543,7 +619,9 @@
   "risk": "Описание короткое, модель не указана — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10716402176",
   "img": "img/10716402176.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716892192,
@@ -557,7 +635,9 @@
   "risk": "Описание в одну строку — проверить патч",
   "url": "https://www.vinted.fr/items/10716892192",
   "img": "img/10716892192.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716803491,
@@ -571,7 +651,9 @@
   "risk": "Модель не указана",
   "url": "https://www.vinted.fr/items/10716803491",
   "img": "img/10716803491.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716495322,
@@ -585,7 +667,9 @@
   "risk": "Описание как у перекупа — проверить бирки и оригинальность",
   "url": "https://www.vinted.fr/items/10716495322",
   "img": "img/10716495322.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10716780721,
@@ -599,7 +683,9 @@
   "risk": "Описания нет — проверить патч",
   "url": "https://www.vinted.fr/items/10716780721",
   "img": "img/10716780721.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716715714,
@@ -613,7 +699,9 @@
   "risk": "Описания нет — проверить патч",
   "url": "https://www.vinted.fr/items/10716715714",
   "img": "img/10716715714.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716688973,
@@ -627,7 +715,9 @@
   "risk": "Описания нет — проверить патч",
   "url": "https://www.vinted.fr/items/10716688973",
   "img": "img/10716688973.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716648587,
@@ -641,7 +731,9 @@
   "risk": "Не проверялось",
   "url": "https://www.vinted.fr/items/10716648587",
   "img": "img/10716648587.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716044115,
@@ -655,7 +747,9 @@
   "risk": "Описание минимальное — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10716044115",
   "img": "img/10716044115.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716296749,
@@ -669,7 +763,9 @@
   "risk": "Описание пустое — проверить патч",
   "url": "https://www.vinted.fr/items/10716296749",
   "img": "img/10716296749.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716055669,
@@ -683,7 +779,9 @@
   "risk": "Проверить патч",
   "url": "https://www.vinted.fr/items/10716055669",
   "img": "img/10716055669.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716326189,
@@ -697,7 +795,9 @@
   "risk": "Высокий риск подделки, модель не указана",
   "url": "https://www.vinted.fr/items/10716326189",
   "img": "",
-  "tag": "strange"
+  "tag": "strange",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10716041142,
@@ -711,7 +811,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10716041142",
   "img": "img/10716041142.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716286665,
@@ -725,7 +827,9 @@
   "risk": "Описание пустое",
   "url": "https://www.vinted.fr/items/10716286665",
   "img": "img/10716286665.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716188596,
@@ -739,7 +843,9 @@
   "risk": "Есть маленькая дырка; проверить оригинальность",
   "url": "https://www.vinted.fr/items/10716188596",
   "img": "img/10716188596.jpg",
-  "tag": "strange"
+  "tag": "strange",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10716214983,
@@ -753,7 +859,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10716214983",
   "img": "img/10716214983.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10715507519,
@@ -767,7 +875,9 @@
   "risk": "продавец пишет, что покрытие слегка потёрто и местами нужна реставрация; проверить оригинальность",
   "url": "https://www.vinted.fr/items/10715507519",
   "img": "img/10715507519.jpg",
-  "tag": "rare"
+  "tag": "rare",
+  "tier": "middle",
+  "rarity": ""
  },
  {
   "id": 10715752387,
@@ -781,7 +891,9 @@
   "risk": "модель не указана",
   "url": "https://www.vinted.fr/items/10715752387",
   "img": "img/10715752387.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10715608588,
@@ -795,7 +907,9 @@
   "risk": "описание пустое, модель неизвестна — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10715608588",
   "img": "img/10715608588.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714742450,
@@ -809,7 +923,9 @@
   "risk": "только передача в Париже, продавец без отзывов",
   "url": "https://www.vinted.fr/items/10714742450",
   "img": "img/10714742450.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10715158873,
@@ -823,7 +939,9 @@
   "risk": "нет нашивки на рукаве — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10715158873",
   "img": "img/10715158873.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10715201151,
@@ -837,7 +955,9 @@
   "risk": "молния капризничает, модель не указана",
   "url": "https://www.vinted.fr/items/10715201151",
   "img": "img/10715201151.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714923591,
@@ -851,7 +971,9 @@
   "risk": "нет нашивки, описание в одну строку — высокий риск фейка",
   "url": "https://www.vinted.fr/items/10714923591",
   "img": "img/10714923591.jpg",
-  "tag": "fake"
+  "tag": "fake",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714941464,
@@ -865,7 +987,9 @@
   "risk": "внутренние бирки срезаны",
   "url": "https://www.vinted.fr/items/10714941464",
   "img": "img/10714941464.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10715015197,
@@ -879,7 +1003,9 @@
   "risk": "не проверялось",
   "url": "https://www.vinted.fr/items/10715015197",
   "img": "img/10715015197.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10715193271,
@@ -893,7 +1019,9 @@
   "risk": "бренд «Stone Islande», описания нет — скорее всего фейк",
   "url": "https://www.vinted.fr/items/10715193271",
   "img": "img/10715193271.jpg",
-  "tag": "fake"
+  "tag": "fake",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714395104,
@@ -907,7 +1035,9 @@
   "risk": "короткое описание, «Authentique» со слов продавца",
   "url": "https://www.vinted.fr/items/10714395104",
   "img": "img/10714395104.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "middle",
+  "rarity": ""
  },
  {
   "id": 10714340504,
@@ -921,7 +1051,9 @@
   "risk": "описание из одной строки — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10714340504",
   "img": "img/10714340504.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714508754,
@@ -935,7 +1067,9 @@
   "risk": "проверить дефекты на фото",
   "url": "https://www.vinted.fr/items/10714508754",
   "img": "img/10714508754.jpg",
-  "tag": "rare"
+  "tag": "rare",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10714593045,
@@ -949,7 +1083,9 @@
   "risk": "модель не указана",
   "url": "https://www.vinted.fr/items/10714593045",
   "img": "img/10714593045.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714550982,
@@ -963,7 +1099,9 @@
   "risk": "не проверялось",
   "url": "https://www.vinted.fr/items/10714550982",
   "img": "img/10714550982.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714333293,
@@ -977,7 +1115,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10714333293",
   "img": "img/10714333293.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714267027,
@@ -991,7 +1131,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10714267027",
   "img": "img/10714267027.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714431391,
@@ -1005,7 +1147,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10714431391",
   "img": "img/10714431391.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10713828077,
@@ -1019,7 +1163,9 @@
   "risk": "короткое описание — проверить патч",
   "url": "https://www.vinted.fr/items/10713828077",
   "img": "img/10713828077.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714102034,
@@ -1033,7 +1179,9 @@
   "risk": "описание из 3 слов — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10714102034",
   "img": "img/10714102034.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714130802,
@@ -1047,7 +1195,9 @@
   "risk": "категория худи, хлопок, новый продавец — возможно просто принт",
   "url": "https://www.vinted.fr/items/10714130802",
   "img": "img/10714130802.jpg",
-  "tag": "rare"
+  "tag": "rare",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714010092,
@@ -1061,7 +1211,9 @@
   "risk": "проверить бирки",
   "url": "https://www.vinted.fr/items/10714010092",
   "img": "img/10714010092.jpg",
-  "tag": "rare"
+  "tag": "rare",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10713886139,
@@ -1075,7 +1227,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10713886139",
   "img": "img/10713886139.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10713937862,
@@ -1089,7 +1243,9 @@
   "risk": "описание короткое",
   "url": "https://www.vinted.fr/items/10713937862",
   "img": "img/10713937862.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10714054498,
@@ -1103,7 +1259,9 @@
   "risk": "",
   "url": "https://www.vinted.fr/items/10714054498",
   "img": "img/10714054498.jpg",
-  "tag": "rare"
+  "tag": "rare",
+  "tier": "luxury",
+  "rarity": ""
  },
  {
   "id": 10713477886,
@@ -1117,7 +1275,9 @@
   "risk": "низкий, продавец пишет «authentique»",
   "url": "https://www.vinted.fr/items/10713477886",
   "img": "img/10713477886.jpg",
-  "tag": "rare"
+  "tag": "rare",
+  "tier": "middle",
+  "rarity": ""
  },
  {
   "id": 10713481779,
@@ -1131,7 +1291,9 @@
   "risk": "короткое описание — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10713481779",
   "img": "img/10713481779.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  },
  {
   "id": 10713634454,
@@ -1145,6 +1307,8 @@
   "risk": "«есть в белом и сером», возможно несколько одинаковых — проверить оригинальность",
   "url": "https://www.vinted.fr/items/10713634454",
   "img": "img/10713634454.jpg",
-  "tag": "deal"
+  "tag": "deal",
+  "tier": "low",
+  "rarity": ""
  }
 ]
