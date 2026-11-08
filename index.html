@@ -37,7 +37,7 @@
   .day { color: var(--hint); font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin: 10px 4px 0; }
   .card { position: relative; display: flex; gap: 12px; background: var(--card); border-radius: 14px; padding: 10px;
     cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; transition: transform .12s, opacity .2s; }
-  .card.press { transform: scale(.96); transition: transform .28s; }
+  .card.press { transform: scale(.96); transition: transform .17s; }
   .card.mine { opacity: .62; }
   .ph { flex: none; width: 96px; height: 128px; border-radius: 10px; background: var(--bg2) center/cover no-repeat;
     display: grid; place-items: center; color: var(--hint); font-size: 28px; overflow: hidden; }
@@ -190,7 +190,7 @@ function down(e) {
   const card = e.target.closest(".card"); if (!card) return;
   longFired = false; const p = e.touches ? e.touches[0] : e; startXY = [p.clientX, p.clientY];
   card.classList.add("press");
-  timer = setTimeout(() => { longFired = true; card.classList.remove("press"); actions(card.dataset.id); }, 280);
+  timer = setTimeout(() => { longFired = true; card.classList.remove("press"); actions(card.dataset.id); }, 170);
 }
 function cancel() { clearTimeout(timer); document.querySelectorAll(".card.press").forEach(c => c.classList.remove("press")); }
 function move(e) { if (!startXY) return; const p = e.touches ? e.touches[0] : e;
