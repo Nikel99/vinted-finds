@@ -1,5 +1,37 @@
 [
  {
+  "id": 10742962422,
+  "ts": "2026-11-10T07:02:28",
+  "brand": "Prada",
+  "title": "Prada Sport / Linea Rossa — лёгкая куртка (бомбер), тёмно-синяя",
+  "price": 80,
+  "size": "L",
+  "cond": "Très bon état",
+  "why": "Prada Linea Rossa за 80 € — ниже медианы ~170 € за нейлоновые куртки Prada; красный язычок молнии и пластиковый ярлык «PRADA Made in Italy» выглядят правильно",
+  "risk": "Описание минимальное («Good condition, orignal»), бирки состава на фото нет — уточнить у продавца",
+  "url": "https://www.vinted.fr/items/10742962422",
+  "img": "img/10742962422.jpg",
+  "tag": "deal",
+  "tier": "low",
+  "rarity": "обычная модель Linea Rossa, встречается часто, но за 80 € редко"
+ },
+ {
+  "id": 10743349541,
+  "ts": "2026-11-10T07:02:28",
+  "brand": "Canada Goose",
+  "title": "Canada Goose Macmillan — пуховик, чёрный (Black Label)",
+  "price": 150,
+  "size": "M",
+  "cond": "Neuf avec étiquette",
+  "why": "Если оригинал — пуховик за ~1300 € в рознице за 150 €",
+  "risk": "⚠️ скорее всего фейк — новый с этикетками за ~12% от розницы; голограммы/кода на фото нет, шрифт на нашивке неровный",
+  "url": "https://www.vinted.fr/items/10743349541",
+  "img": "img/10743349541.jpg",
+  "tag": "fake",
+  "tier": "luxury",
+  "rarity": "Macmillan — популярная модель, сильно подделывается"
+ },
+ {
   "id": 10743194761,
   "ts": "2026-11-10T06:56:47",
   "brand": "Stone Island",
