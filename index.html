@@ -14,7 +14,7 @@
     --accent: var(--tg-theme-button-color, #2a7de1);
     --accent-text: var(--tg-theme-button-text-color, #ffffff);
     --card: var(--tg-theme-section-bg-color, var(--tg-theme-bg-color, #ffffff));
-    --rare: #b26cf0; --deal: #22a861; --fake: #e5533d; --strange: #e8a33a; --seen: #22a861;
+    --rare: #b26cf0; --deal: #22a861; --fake: #e5533d; --strange: #e8a33a; --seen: #22a861; --fav: #f5b301;
   }
   @media (prefers-color-scheme: dark) {
     :root:not(.tg) { --bg:#0f0f12; --bg2:#1a1a1f; --text:#f2f2f5; --hint:#8e8e96; --card:#1d1d23; }
@@ -30,9 +30,10 @@
   .sub { color: var(--hint); font-size: 13px; }
   .tiers { display: flex; background: var(--card); border-radius: 10px; padding: 3px; margin-top: 10px; }
   .tiers button { flex: 1; border: 0; background: none; color: var(--text); font: inherit; font-size: 13px; font-weight: 600;
-    padding: 7px 4px; border-radius: 8px; cursor: pointer; }
+    padding: 6px 4px; border-radius: 8px; cursor: pointer; line-height: 1.2; white-space: nowrap; }
   .tiers button.on { background: var(--accent); color: var(--accent-text); }
-  .tiers small { font-weight: 400; opacity: .7; }
+  .tiers small { display: block; font-weight: 400; font-size: 11px; opacity: .7; margin-top: 1px; }
+  .tiers button[data-t="fav"] { flex: 0 0 auto; padding: 7px 13px; }
   .rarity { font-size: 12px; color: var(--rare); }
   .tierb { font-size: 10px; font-weight: 700; letter-spacing: .4px; color: var(--hint); }
   .chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
@@ -46,9 +47,16 @@
     cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; transition: transform .12s, opacity .2s; }
   .card.press { transform: scale(.96); transition: transform .17s; }
   .card.mine { opacity: .62; }
-  .ph { flex: none; width: 96px; height: 128px; border-radius: 10px; background: var(--bg2) center/cover no-repeat;
+  .ph { position: relative; flex: none; width: 96px; height: 128px; border-radius: 10px; background: var(--bg2) center/cover no-repeat;
     display: grid; place-items: center; color: var(--hint); font-size: 28px; overflow: hidden; }
   .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .fav { position: absolute; top: 0; right: 0; width: 40px; height: 40px; padding: 0; border: 0; background: none;
+    display: grid; place-items: center; cursor: pointer; }
+  .fav i { width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,.45); display: grid; place-items: center;
+    transition: transform .12s; }
+  .fav:active i { transform: scale(.82); }
+  .fav svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 1.9; stroke-linejoin: round; }
+  .fav.on svg { fill: var(--fav); stroke: var(--fav); }
   .body { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; padding-bottom: 18px; }
   .top { display: flex; align-items: baseline; gap: 8px; }
   .price { font-size: 19px; font-weight: 700; }
@@ -64,6 +72,7 @@
   .seen { position: absolute; right: 10px; bottom: 8px; display: flex; gap: 4px; }
   .seen span { font-size: 11px; font-weight: 600; color: var(--seen); background: color-mix(in srgb, var(--seen) 14%, transparent);
     border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+  .seen span.f { color: #b98700; background: color-mix(in srgb, var(--fav) 20%, transparent); }
   .empty { text-align: center; color: var(--hint); padding: 48px 16px; }
   .hint { text-align: center; color: var(--hint); font-size: 12px; padding: 4px 16px 0; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: rgba(0,0,0,.82); color: #fff;
@@ -78,7 +87,7 @@
   <div class="tiers" id="tiers"></div>
   <div class="chips" id="chips"></div>
 </header>
-<div class="hint">Зажми карточку — отметить прочитанным или удалить</div>
+<div class="hint">⭐ на фото — в избранное · зажми карточку — прочитано или удалить</div>
 <main id="list"></main>
 <div class="toast" id="toast"></div>
 <script>
@@ -91,7 +100,7 @@ if (inTg) { document.documentElement.classList.add("tg"); tg.ready(); tg.expand(
 const me = inTg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
 const TAGS = { rare: "редкое", deal: "выгодно", fake: "риск фейка", strange: "странное" };
-let all = [], filter = "Все", tier = "all", state = { marks: {}, hidden: {} };
+let all = [], filter = "Все", tier = "all", state = { marks: {}, hidden: {}, favs: {} };
 
 const esc = s => String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 function ago(ts) {
@@ -109,7 +118,8 @@ function dayLabel(ts) {
 function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1800); }
 function haptic(k) { try { tg.HapticFeedback.impactOccurred(k || "medium"); } catch {} }
 
-const TIERS = [["all", "Все"], ["low", "🟢 Low"], ["middle", "🔵 Middle"], ["luxury", "💎 Luxury"]];
+const TIERS = [["all", "Все"], ["low", "🟢 Low"], ["middle", "🔵 Middle"], ["luxury", "💎 Luxury"], ["fav", "⭐"]];
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.3l2.7 5.5 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6-4.4-4.2 6-.9z"/></svg>';
 function tierOf(x) {
   if (x.tier) return x.tier;
   if (x.brand === "Prada") return "luxury";
@@ -118,41 +128,45 @@ function tierOf(x) {
   return "low";
 }
 const visibleAll = () => all.filter(x => !state.hidden[x.id]);
-const visible = () => visibleAll().filter(x => tier === "all" || tierOf(x) === tier);
 const marks = x => state.marks[x.id] || [];
 const seenByMe = x => me && marks(x).some(m => m.u === me);
+// favourites: saved per person, but the ⭐ tab is shared — it shows everything either of you saved
+const favs = x => (state.favs && state.favs[x.id]) || [];
+const favByMe = x => me && favs(x).some(m => m.u === me);
+const visible = () => visibleAll().filter(x => tier === "all" || (tier === "fav" ? favs(x).length : tierOf(x) === tier));
 
 function render() {
   let items = visible();
   if (filter === "Новые") items = items.filter(x => !seenByMe(x));
   else if (filter !== "Все") items = items.filter(x => x.brand === filter);
   const list = document.getElementById("list");
-  if (!items.length) { list.innerHTML = '<div class="empty">Пока ничего нет</div>'; return; }
+  if (!items.length) { list.innerHTML = `<div class="empty">${tier === "fav" && filter === "Все" ? "В избранном пока пусто.<br>Нажми ⭐ на фото вещи, чтобы сохранить её." : "Пока ничего нет"}</div>`; return; }
   let html = "", lastDay = "";
   for (const x of items) {
     const day = dayLabel(x.ts);
     if (day !== lastDay) { html += `<div class="day">${day}</div>`; lastDay = day; }
-    const ms = marks(x);
-    html += `<div class="card ${seenByMe(x) ? "mine" : ""}" data-id="${x.id}">
-      <div class="ph">${x.img ? `<img src="${esc(x.img)}" loading="lazy" alt="" onerror="this.remove();this.parentNode.textContent='🧥'">` : "🧥"}</div>
+    const ms = marks(x), fo = favs(x).filter(m => m.u !== me), fm = favByMe(x);
+    html += `<div class="card ${seenByMe(x) && tier !== "fav" ? "mine" : ""}" data-id="${x.id}">
+      <div class="ph">${x.img ? `<img src="${esc(x.img)}" loading="lazy" alt="" onerror="this.replaceWith('🧥')">` : "🧥"}
+        <button class="fav ${fm ? "on" : ""}" data-fav="${x.id}" aria-label="${fm ? "Убрать из избранного" : "В избранное"}"><i>${STAR}</i></button></div>
       <div class="body">
         <div class="top"><span class="price">${Math.round(x.price)} €</span>
           ${x.tag && TAGS[x.tag] ? `<span class="tag ${x.tag}">${TAGS[x.tag]}</span>` : ""}
-          <span class="time">${tier === "all" ? `<span class="tierb">${tierOf(x).toUpperCase()}</span> · ` : ""}${ago(x.ts)}</span></div>
+          <span class="time">${tier === "all" || tier === "fav" ? `<span class="tierb">${tierOf(x).toUpperCase()}</span> · ` : ""}${ago(x.ts)}</span></div>
         <div class="title">${esc(x.title)}</div>
         <div class="meta">${esc([x.size, x.cond].filter(Boolean).join(" · "))}</div>
         ${x.why ? `<div class="why">${esc(x.why)}</div>` : ""}
         ${x.rarity ? `<div class="rarity">◆ ${esc(x.rarity)}</div>` : ""}
         ${x.risk ? `<div class="risk"><b>Риск:</b> ${esc(x.risk)}</div>` : ""}
       </div>
-      ${ms.length ? `<div class="seen">${ms.map(m => `<span>✓ ${esc(m.n)}</span>`).join("")}</div>` : ""}
+      ${ms.length || fo.length ? `<div class="seen">${fo.map(m => `<span class="f">★ ${esc(m.n)}</span>`).join("")}${ms.map(m => `<span>✓ ${esc(m.n)}</span>`).join("")}</div>` : ""}
     </div>`;
   }
   list.innerHTML = html;
 }
 
 function renderChips() {
-  const va = visibleAll(), tc = { all: va.length };
+  const va = visibleAll(), tc = { all: va.length, fav: va.filter(x => favs(x).length).length };
   for (const x of va) tc[tierOf(x)] = (tc[tierOf(x)] || 0) + 1;
   document.getElementById("tiers").innerHTML = TIERS.map(([k, n]) =>
     `<button class="${k === tier ? "on" : ""}" data-t="${k}">${n} <small>${tc[k] || 0}</small></button>`).join("");
@@ -178,6 +192,24 @@ async function post(path, body) {
   } catch (e) { toast("Не удалось сохранить, попробуй ещё раз"); return false; }
 }
 
+const favBusy = new Set();
+async function toggleFav(id) {
+  const x = all.find(d => String(d.id) === String(id)); if (!x || favBusy.has(x.id)) return;
+  if (!API || !inTg || !me) { post("/fav", {}); return; }   // just shows why it can't be saved
+  const on = !favByMe(x), u = tg.initDataUnsafe.user;
+  haptic("light"); favBusy.add(x.id);
+  // show the result right away, then confirm with the server
+  state.favs = state.favs || {};
+  const prev = state.favs[x.id], rest = favs(x).filter(m => m.u !== me);
+  const next = on ? [...rest, { u: me, n: u.first_name || u.username || String(me), t: Date.now() }] : rest;
+  if (next.length) state.favs[x.id] = next; else delete state.favs[x.id];
+  refresh();
+  const ok = await post("/fav", { id: x.id, on });
+  favBusy.delete(x.id);
+  if (ok) toast(on ? "В избранном ⭐" : "Убрано из избранного");
+  else { if (prev) state.favs[x.id] = prev; else delete state.favs[x.id]; refresh(); }
+}
+
 function popup(params) {
   return new Promise(res => {
     if (tg && tg.showPopup && inTg) tg.showPopup(params, res);
@@ -198,10 +230,10 @@ async function actions(id) {
 
 async function clean() {
   const v = visibleAll(), dayMs = 86400000;
-  const choice = await popup({ title: "Очистить ленту", message: "Какие находки удалить? Удаление общее — пропадут и у друга.",
+  const choice = await popup({ title: "Очистить ленту", message: "Какие находки удалить? Удаление общее — пропадут и у друга. Избранное останется.",
     buttons: [{ id: "1", text: "Старше 1 дня" }, { id: "3", text: "Старше 3 дней" }, { type: "cancel" }] });
   if (!choice) return;
-  const ids = v.filter(x => Date.now() - new Date(x.ts) > +choice * dayMs).map(x => x.id);
+  const ids = v.filter(x => !favs(x).length && Date.now() - new Date(x.ts) > +choice * dayMs).map(x => x.id);
   if (!ids.length) { toast("Нечего удалять"); return; }
   if (await post("/hide", { ids })) toast(`Удалено: ${ids.length}`);
 }
@@ -209,7 +241,7 @@ async function clean() {
 // long-press handling (touch + mouse)
 let timer = null, longFired = false, startXY = null;
 function down(e) {
-  const card = e.target.closest(".card"); if (!card) return;
+  const card = e.target.closest(".card"); if (!card || e.target.closest("[data-fav]")) return;
   longFired = false; const p = e.touches ? e.touches[0] : e; startXY = [p.clientX, p.clientY];
   card.classList.add("press");
   timer = setTimeout(() => { longFired = true; card.classList.remove("press"); actions(card.dataset.id); }, 170);
@@ -231,6 +263,8 @@ document.addEventListener("click", e => {
   const chip = e.target.closest(".chip");
   if (chip) { filter = chip.dataset.f; refresh(); window.scrollTo(0, 0); return; }
   if (e.target.closest("#clean")) { clean(); return; }
+  const fb = e.target.closest("[data-fav]");
+  if (fb) { toggleFav(fb.dataset.fav); return; }
   const card = e.target.closest(".card");
   if (card) {
     if (longFired) { longFired = false; return; }
